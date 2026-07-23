@@ -1,0 +1,215 @@
+:root {
+  /* base theme */
+  --bg: #0e1016;
+  --bg-deep: #080a0f;
+  --panel: #141824;
+  --ink: #e7ecf5;
+  --ink-dim: #8b93a7;
+
+  /* flat neon accents — recolored per-song at runtime */
+  --accent-low: #5eead4;   /* teal   — bass  */
+  --accent-mid: #c4b5fd;   /* violet — melody */
+  --accent-high: #f0abfc;  /* magenta— vocals */
+  --accent: var(--accent-low);
+
+  --band-low: 0;
+  --band-mid: 0;
+  --band-high: 0;
+
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+  transition: background 1.2s ease;
+}
+
+/* ============================ LOUNGE (top) ============================ */
+.lounge {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 40px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#landscape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.lounge > * { position: relative; z-index: 1; }
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.brand h1 {
+  font-size: 20px;
+  letter-spacing: 0.32em;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+}
+.brand .dot { color: var(--accent-high); }
+.brand small { color: var(--ink-dim); letter-spacing: 0.14em; font-size: 11px; }
+
+.search {
+  display: flex;
+  gap: 10px;
+  max-width: 620px;
+}
+.search input {
+  flex: 1;
+  background: rgba(20, 24, 36, 0.72);
+  border: 1px solid #262c3c;
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--ink);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search input:focus { border-color: var(--accent); }
+.search button {
+  background: var(--accent);
+  color: #0a0c12;
+  border: 0;
+  border-radius: 12px;
+  padding: 0 22px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.prompt-rotator {
+  color: var(--ink-dim);
+  font-size: 13px;
+  height: 18px;
+  letter-spacing: 0.04em;
+}
+.prompt-rotator b { color: var(--accent-mid); font-weight: 600; }
+
+/* energy-match cards */
+.matches {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+.match-card {
+  flex: 0 0 168px;
+  background: rgba(20, 24, 36, 0.66);
+  border: 1px solid #232838;
+  border-radius: 14px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.2s;
+}
+.match-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.match-card .cover {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: #0c0e14 center/cover;
+  margin-bottom: 10px;
+}
+.match-card .title { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.match-card .artist { font-size: 12px; color: var(--ink-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.match-card .meter {
+  height: 4px; border-radius: 2px; margin-top: 8px;
+  background: linear-gradient(90deg, var(--accent-low), var(--accent-high));
+}
+
+/* ============================ RAILWAY (bottom) ============================ */
+.railway {
+  position: relative;
+  height: 300px;
+  background: linear-gradient(180deg, transparent, var(--bg-deep));
+}
+#fl-train { width: 100%; height: 100%; display: block; }
+
+/* train part styling driven by CSS vars */
+.fl-tyre { fill: #10131b; stroke: #454d63; stroke-width: 4; }
+.fl-spokes { stroke: #565f78; }
+.fl-hub { fill: #737d97; }
+.fl-rod { stroke: var(--accent-high); stroke-width: 5; stroke-linecap: round; opacity: 0.85; }
+.fl-frame { fill: #232a38; }
+.fl-roof { fill: #2b3242; }
+.fl-cab-window { fill: #0b1a1c; stroke: var(--accent-low); stroke-width: 1.5; }
+.fl-band { stroke: #10131b; stroke-width: 3; opacity: 0.7; }
+.fl-dome { fill: #3a4254; }
+.fl-smokebox { fill: #1a1f2b; stroke: #3a4152; stroke-width: 2; }
+.fl-smokebox-door { fill: #232a38; stroke: #454d63; stroke-width: 2; }
+.fl-chimney { fill: #262d3d; stroke: #3a4152; stroke-width: 1.5; }
+.fl-lamp { fill: #fff7d6; }
+.fl-cowcatcher { fill: #1a1f2b; stroke: #3a4152; stroke-width: 1.5; }
+
+.fl-rail { fill: #333a4c; }
+.fl-sleeper { fill: #1c212d; }
+
+.fl-car-body { fill: #12151e; stroke-width: 2; }
+.fl-coupler { fill: #333a4c; }
+.fl-car-label { font: 700 12px/1 "Inter", sans-serif; letter-spacing: 0.22em; text-anchor: middle; opacity: 0.85; }
+.fl-window-glow { opacity: 0.18; transition: opacity 0.08s linear; }
+
+.fl-platform { fill: #161b26; stroke: #2a3142; stroke-width: 1; }
+.fl-sign { fill: #0c0e14; stroke: var(--accent-high); stroke-width: 2; }
+.fl-sign-text { font: 600 15px/1 "Inter", sans-serif; text-anchor: middle; fill: var(--ink); }
+.fl-sign-post { stroke: #2a3142; stroke-width: 3; }
+
+.fl-puff { fill: #cdd6e6; }
+
+/* ============================ GENRE CAROUSEL ============================ */
+.genres {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 10px;
+  padding: 0 16px;
+  overflow-x: auto;
+  z-index: 3;
+  scrollbar-width: none;
+}
+.genres::-webkit-scrollbar { display: none; }
+.genre-card {
+  flex: 0 0 92px;
+  height: 56px;
+  border-radius: 10px;
+  background: #0c0e14 center/cover;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid #232838;
+  transition: transform 0.15s;
+}
+.genre-card:hover { transform: translateY(-2px); }
+.genre-card span {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: linear-gradient(0deg, rgba(8,10,15,0.92), transparent);
+}
